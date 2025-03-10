@@ -1,7 +1,7 @@
 # 프로젝트 제목  
 ![이미지 설명](https://kr.object.ncloudstorage.com/yog-img-storage/profile/ce85a9a5-9821-477b-8775-b25cade5d83e_aws%20image.png)
 ![Logo](https://kr.object.ncloudstorage.com/yog-img-storage/profile/ce85a9a5-9821-477b-8775-b25cade5d83e_aws%20image.png)
-<img src="https://kr.object.ncloudstorage.com/yog-img-storage/profile/ce85a9a5-9821-477b-8775-b25cade5d83e_aws%20image.png" width="300">
+<img src="https://kr.object.ncloudstorage.com/yog-img-storage/profile/ce85a9a5-9821-477b-8775-b25cade5d83e_aws%20image.png" width="800">
 
 ## 📌 기능  
 - 기능 1  

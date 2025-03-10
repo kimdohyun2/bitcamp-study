@@ -1,5 +1,5 @@
 # 프로젝트 제목  
-설명 내용을 작성하세요.  
+![이미지 설명]([이미지URL](https://kr.object.ncloudstorage.com/yog-img-storage/profile/ce85a9a5-9821-477b-8775-b25cade5d83e_aws%20image.png))
 
 ## 📌 기능  
 - 기능 1  

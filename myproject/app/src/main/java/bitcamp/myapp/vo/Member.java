@@ -3,7 +3,7 @@ package bitcamp.myapp.vo;
 import java.sql.Date;
 
 public class Member {
-  private int no;
+  private long no;
   private String name;
   private String email;
   private String password;
@@ -11,11 +11,11 @@ public class Member {
   private Date createDate;
   private String photo;
 
-  public int getNo() {
+  public long getNo() {
     return no;
   }
 
-  public void setNo(int no) {
+  public void setNo(long no) {
     this.no = no;
   }
 

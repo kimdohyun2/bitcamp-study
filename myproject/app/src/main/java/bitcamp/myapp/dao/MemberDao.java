@@ -30,7 +30,7 @@ public class MemberDao {
       }
 
       Member member = new Member();
-      member.setNo(rs.getInt("member_id"));
+      member.setNo(rs.getLong("member_id"));
       member.setName(rs.getString("name"));
       member.setEmail(rs.getString("email"));
 

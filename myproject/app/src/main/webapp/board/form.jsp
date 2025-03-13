@@ -84,7 +84,7 @@
         </div>
         <div>
             <label for="file">첨부파일:</label>
-            <input type="file" id="file" name="file">
+            <input type="file" id="file" name="file" multiple>
         </div>
         <div class="form-group">
             <input type="submit" value="등록">

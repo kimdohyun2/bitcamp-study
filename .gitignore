@@ -491,4 +491,7 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+# 모든 프로젝트의 temp/work/tomcat 하위 파일 무시
+**/temp/work/
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,java,node,eclipse,intellij+all,visualstudiocode,gradle,maven,c++

@@ -82,9 +82,9 @@
             <label for="content">내용:</label>
             <textarea id="content" name="content" required></textarea>
         </div>
-        <div>
-            <label for="file">첨부파일:</label>
-            <input type="file" id="file" name="file" multiple>
+        <div class="form-group">
+            <label for="files">첨부파일:</label>
+            <input type="file" id="files" name="files" multiple>
         </div>
         <div class="form-group">
             <input type="submit" value="등록">

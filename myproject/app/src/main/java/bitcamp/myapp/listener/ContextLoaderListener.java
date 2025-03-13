@@ -31,9 +31,9 @@ public class ContextLoaderListener implements ServletContextListener {
 
       // 4. DB에 연결
       con = DriverManager.getConnection(
-              "jdbc:mysql://db-32e40j-kr.vpc-pub-cdb.ntruss.com:3306/studentdb",
-              "student",
-              "bitcamp123!@#");
+              "jdbc:mysql://db-32mdj5-kr.vpc-pub-cdb.ntruss.com/student",
+              "user1",
+              "camp0000!");
 
       ServletContext ctx = sce.getServletContext();
 

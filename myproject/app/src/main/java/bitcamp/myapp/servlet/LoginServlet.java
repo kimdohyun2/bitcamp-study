@@ -23,6 +23,10 @@ public class LoginServlet extends HttpServlet {
 
       MemberService memberService = (MemberService) getServletContext().getAttribute("memberService");
       Member member = memberService.get(email, password);
+      if (member == null) {
+        resp.sendRedirect("/auth/login-form");
+        return;
+      }
 
       if (saveEmail != null) {
         Cookie emailCookie = new Cookie("email", email);
@@ -32,10 +36,6 @@ public class LoginServlet extends HttpServlet {
         Cookie emailCookie = new Cookie("email", "");
         emailCookie.setMaxAge(0);
         resp.addCookie(emailCookie);
-      }
-      if (member == null) {
-        resp.sendRedirect("/auth/login-form");
-        return;
       }
 
       req.getSession().setAttribute("loginUser", member);

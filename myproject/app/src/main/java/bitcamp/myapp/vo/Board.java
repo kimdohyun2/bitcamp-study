@@ -1,60 +1,60 @@
 package bitcamp.myapp.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Board {
-    private long no;
-    private String title;
-    private String content;
-    private int viewCount;
-    private Member writer;
-    private Date createDate;
+  private int no;
+  private String title;
+  private String content;
+  private int viewCount;
+  private Member writer;
+  private Date createDate;
 
-    public long getNo() {
-        return no;
-    }
+  public int getNo() {
+    return no;
+  }
 
-    public void setNo(long no) {
-        this.no = no;
-    }
+  public void setNo(int no) {
+    this.no = no;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-    public int getViewCount() {
-        return viewCount;
-    }
+  public int getViewCount() {
+    return viewCount;
+  }
 
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
-    }
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
+  }
 
-    public Member getWriter() {
-        return writer;
-    }
+  public Member getWriter() {
+    return writer;
+  }
 
-    public void setWriter(Member writer) {
-        this.writer = writer;
-    }
+  public void setWriter(Member writer) {
+    this.writer = writer;
+  }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+  public Date getCreateDate() {
+    return createDate;
+  }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+  public void setCreateDate(Date createDate) {
+    this.createDate = createDate;
+  }
 }

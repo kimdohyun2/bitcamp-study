@@ -1,34 +1,43 @@
 package bitcamp.myapp.servlet;
 
 import bitcamp.myapp.service.BoardService;
-import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.List;
 
-@WebServlet("/board/list")
-public class BoardListServlet extends HttpServlet {
+@WebServlet("/board/update")
+public class BoardUpdateServlet extends HttpServlet {
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     try {
+      Member loginUser = (Member) req.getSession().getAttribute("loginUser");
+      if (loginUser == null) {
+        throw new Exception("로그인이 필요합니다.");
+      }
+
+      Board board = new Board();
+      board.setNo(Integer.parseInt(req.getParameter("no")));
+      board.setTitle(req.getParameter("title"));
+      board.setContent(req.getParameter("content"));
+
       BoardService boardService = (BoardService) getServletContext().getAttribute("boardService");
-      List<Board> list = boardService.list();
+      Board oldBoard = boardService.get(board.getNo());
 
-      req.setAttribute("list", list);
+      if (oldBoard.getWriter().getNo() != loginUser.getNo()) {
+        throw new Exception("변경 권한이 없습니다.");
+      }
 
-      resp.setContentType("text/html; charset=UTF-8");
-      req.getRequestDispatcher("/board/list.jsp").include(req, resp);
+      boardService.update(board);
+      resp.sendRedirect("/board/list");
 
     } catch (Exception e) {
       StringWriter stringWriter = new StringWriter();

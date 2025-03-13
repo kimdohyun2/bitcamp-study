@@ -1,14 +1,12 @@
 package bitcamp.myapp.servlet;
 
 import bitcamp.myapp.service.BoardService;
-import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,18 +15,25 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
-@WebServlet("/board/list")
-public class BoardListServlet extends HttpServlet {
+@WebServlet("/board/add")
+public class BoardAddServlet extends HttpServlet {
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     try {
+      Member loginUser = (Member) req.getSession().getAttribute("loginUser");
+      if (loginUser == null) {
+        throw new Exception("로그인이 필요합니다.");
+      }
+
+      Board board = new Board();
+      board.setTitle(req.getParameter("title"));
+      board.setContent(req.getParameter("content"));
+      board.setWriter(loginUser);
+
       BoardService boardService = (BoardService) getServletContext().getAttribute("boardService");
-      List<Board> list = boardService.list();
+      boardService.add(board);
 
-      req.setAttribute("list", list);
-
-      resp.setContentType("text/html; charset=UTF-8");
-      req.getRequestDispatcher("/board/list.jsp").include(req, resp);
+      resp.sendRedirect("/board/list");
 
     } catch (Exception e) {
       StringWriter stringWriter = new StringWriter();

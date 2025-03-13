@@ -1,14 +1,11 @@
 package bitcamp.myapp.servlet;
 
 import bitcamp.myapp.service.BoardService;
-import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.vo.Board;
-import bitcamp.myapp.vo.Member;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,18 +14,20 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
-@WebServlet("/board/list")
-public class BoardListServlet extends HttpServlet {
+@WebServlet("/board/detail")
+public class BoardDetailServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     try {
-      BoardService boardService = (BoardService) getServletContext().getAttribute("boardService");
-      List<Board> list = boardService.list();
+      int no = Integer.parseInt(req.getParameter("no"));
 
-      req.setAttribute("list", list);
+      BoardService boardService = (BoardService) getServletContext().getAttribute("boardService");
+      Board board = boardService.get(no);
+
+      req.setAttribute("board", board);
 
       resp.setContentType("text/html; charset=UTF-8");
-      req.getRequestDispatcher("/board/list.jsp").include(req, resp);
+      req.getRequestDispatcher("/board/detail.jsp").include(req, resp);
 
     } catch (Exception e) {
       StringWriter stringWriter = new StringWriter();

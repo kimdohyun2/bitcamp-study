@@ -18,6 +18,8 @@ dependencies {
     implementation libs.tomcat.embed.jasper
     implementation libs.spring.webmvc
 
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.782'
+
 
     testImplementation libs.junit.jupiter
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

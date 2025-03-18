@@ -1,13 +1,8 @@
 package bitcamp.myapp.listener;
 
-import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.dao.MySQLBoardDao;
 import bitcamp.myapp.dao.MySQLMemberDao;
-import bitcamp.myapp.service.BoardService;
-import bitcamp.myapp.service.DefaultBoardService;
-import bitcamp.myapp.service.DefaultMemberService;
-import bitcamp.myapp.service.MemberService;
+import bitcamp.myapp.service.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -35,9 +30,9 @@ public class ContextLoaderListener implements ServletContextListener {
 
       // 4. DB에 연결
       con = DriverManager.getConnection(
-              "jdbc:mysql://db-32e40j-kr.vpc-pub-cdb.ntruss.com:3306/studentdb",
-              "student",
-              "bitcamp123!@#");
+              "jdbc:mysql://\tdb-32mdj5-kr.vpc-pub-cdb.ntruss.com:3306/student",
+              "user1",
+              "camp0000!");
 
       ServletContext ctx = sce.getServletContext();
 
@@ -49,6 +44,9 @@ public class ContextLoaderListener implements ServletContextListener {
 
       DefaultBoardService boardService = new DefaultBoardService(boardDao);
       ctx.setAttribute("boardService", boardService);
+
+      StorageService storageService = new NCPStorageService();
+      ctx.setAttribute("storageService", storageService);
 
       System.out.println("웹애플리케이션 실행 환경 준비!");
 

@@ -1,6 +1,7 @@
 package bitcamp.myapp.servlet;
 
 import bitcamp.myapp.service.BoardService;
+import bitcamp.myapp.service.NCPStorageService;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 
@@ -11,15 +12,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.List;
+import java.util.Collection;
+import java.util.UUID;
 
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024,
-        maxFileSize = 1024 * 1024 * 10,
-        maxRequestSize = 1024 * 1024 * 10 * 5
+        maxFileSize = 1024 * 1024,
+        maxRequestSize = 1024 * 1024 * 5
 )
 @WebServlet("/board/add")
 public class BoardAddServlet extends HttpServlet {
@@ -30,7 +33,6 @@ public class BoardAddServlet extends HttpServlet {
       if (loginUser == null) {
         throw new Exception("로그인이 필요합니다.");
       }
-
       Board board = new Board();
       board.setTitle(req.getParameter("title"));
       board.setContent(req.getParameter("content"));
@@ -38,6 +40,18 @@ public class BoardAddServlet extends HttpServlet {
 
       BoardService boardService = (BoardService) getServletContext().getAttribute("boardService");
       boardService.add(board);
+
+      NCPStorageService storageService = (NCPStorageService) getServletContext().getAttribute("storageService");
+      Collection<Part> parts = req.getParts();
+
+      for(Part part : parts){
+        if (!part.getName().equals("files")) {
+          continue;
+        }
+
+        String filepath = "board/" + UUID.randomUUID().toString();
+        storageService.upload(filepath, part.getInputStream());
+      }
 
       resp.sendRedirect("/board/list");
 

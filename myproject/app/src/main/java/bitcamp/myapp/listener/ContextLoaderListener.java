@@ -1,11 +1,9 @@
 package bitcamp.myapp.listener;
 
-import bitcamp.myapp.dao.MySQLBoardDao;
-import bitcamp.myapp.dao.MySQLBoardFileDao;
-import bitcamp.myapp.dao.MySQLMemberDao;
-import bitcamp.myapp.service.DefaultBoardService;
-import bitcamp.myapp.service.DefaultMemberService;
-import bitcamp.myapp.service.NCPObjectStorageService;
+import bitcamp.myapp.dao.*;
+import bitcamp.myapp.service.*;
+import bitcamp.transaction.TransactionProxyFactory;
+import org.checkerframework.checker.units.qual.N;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -14,7 +12,9 @@ import javax.servlet.annotation.WebListener;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 @WebListener
 public class ContextLoaderListener implements ServletContextListener {
@@ -39,11 +39,16 @@ public class ContextLoaderListener implements ServletContextListener {
       MySQLBoardDao boardDao = new MySQLBoardDao(con);
       MySQLBoardFileDao boardFileDao = new MySQLBoardFileDao(con);
 
+      // 서비스 객체의 트랜잭션을 처리할 프록시 객체 생성기
+      TransactionProxyFactory transactionProxyFactory = new TransactionProxyFactory(con);
+
       DefaultMemberService memberService = new DefaultMemberService(memberDao);
-      ctx.setAttribute("memberService", memberService);
+      ctx.setAttribute("memberService",
+              transactionProxyFactory.createProxy(memberService, MemberService.class));
 
       DefaultBoardService boardService = new DefaultBoardService(boardDao, boardFileDao);
-      ctx.setAttribute("boardService", boardService);
+      ctx.setAttribute("boardService",
+              transactionProxyFactory.createProxy(boardService, BoardService.class));
 
       NCPObjectStorageService storageService = new NCPObjectStorageService(appProps);
       ctx.setAttribute("storageService", storageService);

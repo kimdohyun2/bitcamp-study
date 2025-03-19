@@ -1,8 +1,11 @@
 package bitcamp.myapp.listener;
 
-import bitcamp.myapp.dao.*;
-import bitcamp.myapp.service.*;
-import org.checkerframework.checker.units.qual.N;
+import bitcamp.myapp.dao.MySQLBoardDao;
+import bitcamp.myapp.dao.MySQLBoardFileDao;
+import bitcamp.myapp.dao.MySQLMemberDao;
+import bitcamp.myapp.service.DefaultBoardService;
+import bitcamp.myapp.service.DefaultMemberService;
+import bitcamp.myapp.service.NCPObjectStorageService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -11,9 +14,7 @@ import javax.servlet.annotation.WebListener;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 @WebListener
 public class ContextLoaderListener implements ServletContextListener {

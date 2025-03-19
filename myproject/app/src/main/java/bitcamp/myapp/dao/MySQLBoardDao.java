@@ -3,6 +3,8 @@ package bitcamp.myapp.dao;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -14,24 +16,21 @@ import java.util.List;
 
 public class MySQLBoardDao implements BoardDao {
 
+  private SqlSessionFactory sqlSessionFactory;
   private Connection con;
 
-  public MySQLBoardDao(Connection con) {
+  public MySQLBoardDao(Connection con, SqlSessionFactory sqlSessionFactory) {
     this.con = con;
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   public List<Board> findAll() {
-    String sql = "select" +
-            " b.board_id," +
-            " b.title," +
-            " b.create_date," +
-            " b.view_count," +
-            " m.member_id," +
-            " m.name" +
-            " from ed_board b" +
-            " join ed_member m on b.member_id=m.member_id";
 
-    try (PreparedStatement stmt = con.prepareStatement(sql);
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("BoardDao.findAll");
+    }
+
+    /*try (PreparedStatement stmt = con.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery();
     ) {
 
@@ -55,7 +54,7 @@ public class MySQLBoardDao implements BoardDao {
       return list;
     } catch (Exception e) {
       throw new DaoException(e);
-    }
+    }*/
   }
 
   public int insert(Board board) {

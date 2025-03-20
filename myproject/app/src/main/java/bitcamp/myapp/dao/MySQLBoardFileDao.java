@@ -43,7 +43,7 @@ public class MySQLBoardFileDao implements BoardFileDao {
   @Override
   public int deleteAllByBoardNo(int boardNo) {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return  sqlSession.delete("BoardFileDao.deleteAllByBoardNo", boardNo);
+      return sqlSession.delete("BoardFileDao.deleteAllByBoardNo", boardNo);
     }
   }
 }

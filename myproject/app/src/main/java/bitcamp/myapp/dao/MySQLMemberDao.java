@@ -20,7 +20,7 @@ public class MySQLMemberDao implements MemberDao {
 
   public Member findByEmailAndPassword(String email, String password) {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      HashMap<String, Object> values = new HashMap<>();
+      HashMap<String,Object> values = new HashMap<>();
       values.put("email", email);
       values.put("password", password);
       return sqlSession.selectOne("MemberDao.findByEmailAndPassword", values);

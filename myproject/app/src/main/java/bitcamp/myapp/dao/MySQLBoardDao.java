@@ -18,6 +18,7 @@ import java.util.List;
 public class MySQLBoardDao implements BoardDao {
 
   private SqlSessionFactory sqlSessionFactory;
+
   public MySQLBoardDao(SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
   }

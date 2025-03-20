@@ -1,24 +1,26 @@
 package bitcamp.myapp.listener;
 
-import bitcamp.myapp.dao.MySQLBoardDao;
-import bitcamp.myapp.dao.MySQLBoardFileDao;
-import bitcamp.myapp.dao.MySQLMemberDao;
+import bitcamp.myapp.dao.*;
 import bitcamp.myapp.service.*;
 import bitcamp.transaction.SqlSessionFactoryProxy;
 import bitcamp.transaction.TransactionProxyFactory;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.checkerframework.checker.units.qual.N;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 @WebListener
 public class ContextLoaderListener implements ServletContextListener {
@@ -37,6 +39,7 @@ public class ContextLoaderListener implements ServletContextListener {
       SqlSessionFactory sqlSessionFactory =
               new SqlSessionFactoryProxy(new SqlSessionFactoryBuilder().build(inputStream));
 
+
       con = DriverManager.getConnection(
               appProps.getProperty("jdbc.url"),
               appProps.getProperty("jdbc.username"),
@@ -47,6 +50,8 @@ public class ContextLoaderListener implements ServletContextListener {
       MySQLMemberDao memberDao = new MySQLMemberDao(con);
       MySQLBoardDao boardDao = new MySQLBoardDao(con, sqlSessionFactory);
       MySQLBoardFileDao boardFileDao = new MySQLBoardFileDao(con, sqlSessionFactory);
+
+      ctx.setAttribute("sqlSessionFactory", sqlSessionFactory);
 
       // 서비스 객체의 트랜잭션을 처리할 프록시 객체 생성기
       TransactionProxyFactory transactionProxyFactory = new TransactionProxyFactory(sqlSessionFactory);

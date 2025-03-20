@@ -31,7 +31,8 @@
 
     <insert id="insert" parameterType="bitcamp.myapp.vo.Board"
             useGeneratedKeys="true" keyColumn="board_id" keyProperty="no">
-        insert into ed_board(title, content, member_id) values (#{title}, #{content}, #{writer.no})
+        insert into ed_board(title, content, member_id)
+        values (#{title}, #{content}, #{writer.no})
     </insert>
 
 </mapper>

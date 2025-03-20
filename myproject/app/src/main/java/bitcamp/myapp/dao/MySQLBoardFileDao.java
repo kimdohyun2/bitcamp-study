@@ -24,26 +24,11 @@ public class MySQLBoardFileDao implements BoardFileDao {
   }
 
   public int insert(AttachedFile attachedFile) {
-
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       int count = sqlSession.insert("BoardFileDao.insert", attachedFile);
       sqlSession.commit();
       return count;
     }
-
-    /*String sql = "insert into ed_attach_file(board_id, filename, origin_filename) values (?, ?, ?)";
-
-    try (PreparedStatement stmt = con.prepareStatement(sql)) {
-
-      stmt.setInt(1, attachedFile.getBoardNo());
-      stmt.setString(2, attachedFile.getFilename());
-      stmt.setString(3, attachedFile.getOriginFilename());
-
-      return stmt.executeUpdate();
-
-    } catch (Exception e) {
-      throw new DaoException(e);
-    }*/
   }
 
   public AttachedFile findByNo(int fileNo) {

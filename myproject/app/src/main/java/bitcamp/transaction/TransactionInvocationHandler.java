@@ -33,7 +33,6 @@ public class TransactionInvocationHandler implements InvocationHandler {
       return method.invoke(target, args);
     }
 
-
     SqlSession sqlSession = sqlSessionFactory.openSession();
     try {
       Object returnValue = method.invoke(target, args);
@@ -45,6 +44,7 @@ public class TransactionInvocationHandler implements InvocationHandler {
       throw e;
 
     } finally {
+      sqlSession.close();
     }
   }
 

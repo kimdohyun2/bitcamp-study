@@ -1,5 +1,6 @@
 package bitcamp.myapp.listener;
 
+import bitcamp.myapp.controller.AuthController;
 import bitcamp.myapp.dao.MySQLBoardDao;
 import bitcamp.myapp.dao.MySQLBoardFileDao;
 import bitcamp.myapp.dao.MySQLMemberDao;
@@ -99,6 +100,9 @@ public class ContextLoaderListener2 implements ServletContextListener {
 
       NCPObjectStorageService storageService = new NCPObjectStorageService(appProps);
       ctx.setAttribute("storageService", storageService);
+
+      AuthController authController = new AuthController();
+      ctx.setAttribute("/auth/login-form", authController);
 
       System.out.println("웹애플리케이션 실행 환경 준비!");
 

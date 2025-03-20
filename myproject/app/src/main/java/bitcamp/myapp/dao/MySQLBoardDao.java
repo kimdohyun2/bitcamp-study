@@ -58,8 +58,12 @@ public class MySQLBoardDao implements BoardDao {
   }
 
   public int insert(Board board) {
-
-    String sql = "insert into ed_board(title, content, member_id) values (?, ?, ?)";
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.insert("BoardDao.insert", board);
+      sqlSession.commit();
+      return count;
+    }
+    /*String sql = "insert into ed_board(title, content, member_id) values (?, ?, ?)";
 
 
     try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -77,8 +81,7 @@ public class MySQLBoardDao implements BoardDao {
       return count;
     } catch (Exception e) {
       throw new DaoException(e);
-    }
-
+    }*/
   }
 
   public Board findByNo(int no) {

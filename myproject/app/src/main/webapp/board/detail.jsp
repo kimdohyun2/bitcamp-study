@@ -106,6 +106,7 @@
             <ul id="attached-files">
             <c:forEach items="${board.attachedFiles}" var="attachedFile">
                 <li>
+                    <img src="/board/file/view?fileNo=${attachedFile.no}" alt="Image"><br>
                     <a href="/board/file/download?fileNo=${attachedFile.no}">${attachedFile.originFilename}</a>
                     <button type="button" onclick="deleteFile(${attachedFile.no})">삭제</button>
                 </li>

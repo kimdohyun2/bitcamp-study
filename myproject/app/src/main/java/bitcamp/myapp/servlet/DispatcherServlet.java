@@ -1,11 +1,6 @@
 package bitcamp.myapp.servlet;
 
 import bitcamp.myapp.controller.RequestMapping;
-import bitcamp.myapp.service.BoardService;
-import bitcamp.myapp.service.StorageService;
-import bitcamp.myapp.vo.AttachedFile;
-import bitcamp.myapp.vo.Board;
-import bitcamp.myapp.vo.Member;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,14 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.UUID;
 
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024,

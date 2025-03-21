@@ -1,18 +1,17 @@
 package bitcamp.myapp.service;
 
-import bitcamp.stereotype.Component;
-import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.Properties;
 
-@Component
+@Service
 public class NCPObjectStorageService implements StorageService {
   final String endPoint;
   final String regionName;

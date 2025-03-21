@@ -2,7 +2,7 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.vo.Member;
-import bitcamp.stereotype.Controller;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +17,10 @@ public class AuthController {
     this.memberService = memberService;
   }
 
-  @RequestMapping("/auth/login-form")
   public String form(HttpServletRequest req, HttpServletResponse resp) {
     return "/auth/login-form.jsp";
   }
 
-  @RequestMapping("/auth/login")
   public String login(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     String email = req.getParameter("email");
     String password = req.getParameter("password");
@@ -47,7 +45,6 @@ public class AuthController {
     return "redirect:../home";
   }
 
-  @RequestMapping("/auth/logout")
   public String logout(HttpServletRequest req, HttpServletResponse resp) {
     req.getSession().invalidate();
     return "redirect:../home";

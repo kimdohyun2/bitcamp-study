@@ -3,7 +3,6 @@ package bitcamp.myapp.dao;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
-import bitcamp.stereotype.Component;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -14,7 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class MySQLBoardFileDao implements BoardFileDao {
 
   private SqlSessionFactory sqlSessionFactory;

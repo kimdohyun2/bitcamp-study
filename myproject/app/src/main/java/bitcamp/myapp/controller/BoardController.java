@@ -6,6 +6,7 @@ import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+//@Controller
 public class BoardController {
 
   private BoardService boardService;
@@ -26,12 +27,14 @@ public class BoardController {
     this.storageService = storageService;
   }
 
+  @RequestMapping("/board/list")
   public String list(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     List<Board> list = boardService.list();
     req.setAttribute("list", list);
     return "/board/list.jsp";
   }
 
+  @RequestMapping("/board/detail")
   public String detail(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     int no = Integer.parseInt(req.getParameter("no"));
     boardService.increaseViewCount(no);
@@ -40,10 +43,12 @@ public class BoardController {
     return "/board/detail.jsp";
   }
 
+  @RequestMapping("/board/form")
   public String form(HttpServletRequest req, HttpServletResponse resp) {
     return "/board/form.jsp";
   }
 
+  @RequestMapping("/board/add")
   public String add(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     Member loginUser = (Member) req.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -82,6 +87,7 @@ public class BoardController {
     return "redirect:list";
   }
 
+  @RequestMapping("/board/update")
   public String update(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     Member loginUser = (Member) req.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -129,6 +135,7 @@ public class BoardController {
     return "redirect:list";
   }
 
+  @RequestMapping("/board/delete")
   public String delete(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     Member loginUser = (Member) req.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -150,6 +157,7 @@ public class BoardController {
     return "redirect:list";
   }
 
+  @RequestMapping("/board/file/download")
   public String fileDownload(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     int fileNo = Integer.parseInt(req.getParameter("fileNo"));
     AttachedFile attachedFile = boardService.getAttachedFile(fileNo);
@@ -162,6 +170,7 @@ public class BoardController {
     return null;
   }
 
+  @RequestMapping("/board/file/delete")
   public String fileDelete(HttpServletRequest req, HttpServletResponse resp) throws Exception {
       Member loginUser = (Member) req.getSession().getAttribute("loginUser");
       if (loginUser == null) {

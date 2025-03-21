@@ -7,10 +7,9 @@ import bitcamp.myapp.vo.Board;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
 import java.util.List;
 
-@Service
+//@Service
 public class DefaultBoardService implements BoardService {
 
   private BoardDao boardDao;

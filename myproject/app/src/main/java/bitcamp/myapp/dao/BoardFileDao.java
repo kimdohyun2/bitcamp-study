@@ -8,4 +8,5 @@ public interface BoardFileDao {
   AttachedFile findByNo(int fileNo);
   int delete(int fileNo);
   int deleteAllByBoardNo(int boardNo);
+
 }

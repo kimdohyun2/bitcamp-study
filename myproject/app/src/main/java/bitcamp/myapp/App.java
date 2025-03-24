@@ -33,10 +33,10 @@ public class App {
           @Value("${jdbc.password}") String password
   ) {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-    dataSource.setUrl("jdbc:mysql://localhost:3306/studydb?serverTimezone=UTC");
-    dataSource.setUsername("study");
-    dataSource.setPassword("1111");
+    dataSource.setDriverClassName(driverClassName);
+    dataSource.setUrl(url);
+    dataSource.setUsername(username);
+    dataSource.setPassword(password);
     return dataSource;
   }
 

@@ -54,6 +54,8 @@ obj.init();
   public void init() {
     System.out.println("init() 호출됨! : " + endPoint);
 
+    System.getProperties().setProperty("aws.java.v1.disableDeprecationAnnouncement", "true");
+
     this.s3 = AmazonS3ClientBuilder.standard()
             .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, regionName))
             .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))

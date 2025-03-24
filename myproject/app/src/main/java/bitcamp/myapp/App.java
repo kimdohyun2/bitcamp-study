@@ -45,7 +45,7 @@ public class App {
     return new DataSourceTransactionManager(dataSource);
   }
 
-  @Bean
+ /*@Bean
   public SqlSessionFactory sqlSessionFactory(DataSource dataSource, ApplicationContext iocContainer) throws Exception {
     SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
     factoryBean.setDataSource(dataSource);
@@ -58,7 +58,7 @@ public class App {
     factoryBean.setMapperLocations(iocContainer.getResources("classpath:bitcamp/myapp/mapper/*Dao.xml"));
 
     return factoryBean.getObject();
-  }
+  }*/
 
 /*
   // DAO 구현체 자동 생성을 설정하는 방법 2: 자바 코드로 설정하기

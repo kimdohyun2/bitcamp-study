@@ -9,30 +9,35 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Properties;
 
-//@Service
+@Service
 public class NCPObjectStorageService implements StorageService {
-  final String endPoint;
-  final String regionName;
-  final String accessKey;
-  final String secretKey;
 
-  final String bucketName;
+  @Value("${ncp.end-point}")
+  private String endPoint;
+
+  @Value("${ncp.end-name}")
+  private String regionName;
+
+  @Value("${ncp.access-key}")
+  private String accessKey;
+
+  @Value("${ncp.secret-key}")
+  private String secretKey;
+
+  @Value("${ncp.bucket-name}")
+  private String bucketName;
 
   final AmazonS3 s3;
 
-  public NCPObjectStorageService(Properties props) {
-
-    this.endPoint = props.getProperty("ncp.end-point");
-    this.regionName = props.getProperty("ncp.region-name");
-    this.accessKey = props.getProperty("ncp.access-key");
-    this.secretKey = props.getProperty("ncp.secret-key");
-    this.bucketName = props.getProperty("ncp.bucket-name");
+  public NCPObjectStorageService() {
+    System.out.println("=====================> "+ endPoint);
 
     s3 = AmazonS3ClientBuilder.standard()
             .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, regionName))

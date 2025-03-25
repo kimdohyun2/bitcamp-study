@@ -1,9 +1,5 @@
-package bitcamp.myapp.service;
+package bitcamp.myapp.board;
 
-import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.dao.BoardFileDao;
-import bitcamp.myapp.vo.AttachedFile;
-import bitcamp.myapp.vo.Board;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

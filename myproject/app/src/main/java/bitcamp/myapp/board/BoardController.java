@@ -1,10 +1,7 @@
-package bitcamp.myapp.controller;
+package bitcamp.myapp.board;
 
-import bitcamp.myapp.service.BoardService;
-import bitcamp.myapp.service.StorageService;
-import bitcamp.myapp.vo.AttachedFile;
-import bitcamp.myapp.vo.Board;
-import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.cloud.StorageService;
+import bitcamp.myapp.member.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.JstlView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;

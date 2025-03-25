@@ -1,4 +1,4 @@
-package bitcamp.myapp.vo;
+package bitcamp.myapp.board;
 
 public class AttachedFile {
   private int no;

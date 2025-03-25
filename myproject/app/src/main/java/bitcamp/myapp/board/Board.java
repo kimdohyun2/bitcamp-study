@@ -1,8 +1,12 @@
-package bitcamp.myapp.vo;
+package bitcamp.myapp.board;
+
+import bitcamp.myapp.member.Member;
+import org.apache.ibatis.type.Alias;
 
 import java.sql.Date;
 import java.util.List;
 
+@Alias("board")
 public class Board {
   private int no;
   private String title;

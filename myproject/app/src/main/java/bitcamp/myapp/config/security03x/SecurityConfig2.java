@@ -1,4 +1,4 @@
-package bitcamp.myapp.config.security03;
+package bitcamp.myapp.config.security03x;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -6,11 +6,17 @@ import org.springframework.security.web.SecurityFilterChain;
 
 //@Configuration
 //@EnableWebSecurity // Spring Boot에서 자동으로 활성화시킨다.
-public class SecurityConfig {
+public class SecurityConfig2 {
 
+<<<<<<<< HEAD:myproject/app/src/main/java/bitcamp/myapp/config/security03/SecurityConfig.java
     public SecurityConfig() {
         System.out.println("SecurityConfig 생성자 호출!");
     }
+========
+  public SecurityConfig2() {
+    System.out.println("SecurityConfig 생성자 호출!");
+  }
+>>>>>>>> d01e9e7fa3220cd9ecc5d38af45ed991dd35d329:myproject/app/src/main/java/bitcamp/myapp/config/security03x/SecurityConfig2.java
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

@@ -2,12 +2,15 @@ package bitcamp.myapp.config.security01;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-
-@Configuration
+//@Configuration
 //@EnableWebSecurity // Spring Boot에서 자동으로 활성화시킨다.
 public class SecurityConfig {
 
@@ -16,21 +19,11 @@ public class SecurityConfig {
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-            .authorizeHttpRequests(auth -> auth
-                    .antMatchers("/auth/login-form",
-                           "/auth/login", "/css/**").permitAll()  // /public/** 경로는 인증 없이 허용
-                    .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                    .loginPage("/auth/login-form")
-                    .loginProcessingUrl("/auth/login")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-            );
-
-    return http.build();
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    // 1) Spring Security에서 제공하는 기본 로그인 폼 사용.
+    //    기본 URL: /login
+    http.formLogin(Customizer.withDefaults());
+    SecurityFilterChain securityFilterChain = http.build();
+    return securityFilterChain;
   }
-  
 }

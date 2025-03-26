@@ -22,7 +22,16 @@ public class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     // 1) Spring Security에서 제공하는 기본 로그인 폼 사용.
     //    기본 URL: /login
-    http.formLogin(Customizer.withDefaults());
+    http
+            .authorizeHttpRequests()
+            .mvcMatchers("/home", "/css/**")
+            .permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .build();
+
+
+
     SecurityFilterChain securityFilterChain = http.build();
     return securityFilterChain;
   }

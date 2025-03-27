@@ -30,6 +30,7 @@ public class SecurityConfig4 {
                 .and() // 접근제어권한설정 등록기를 만든 HttpSecurity 객체를 리턴한다.
             // 2) 인가되지 않은 요청인 경우 Spring Security 기본 로그인 화면으로 보내기
             .formLogin(Customizer.withDefaults())
+
             // SecurityFilterChain 준비
             .build();
   }

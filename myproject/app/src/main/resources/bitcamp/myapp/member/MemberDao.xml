@@ -24,19 +24,14 @@
     </select>
 
     <update id="updatePassword">
-        update
-            ed_member
-        set
+        update ed_member set
             pwd = #{password}
         where
             email = #{email}
     </update>
 
     <update id="updateAllPassword">
-        update
-            ed_member
-        set
+        update ed_member set
             pwd = #{password}
     </update>
-
 </mapper>

@@ -11,7 +11,6 @@ public class DefaultMemberService implements MemberService {
     this.memberDao = memberDao;
   }
 
-  @Override
   public Member get(String email) {
     return memberDao.findByEmail(email);
   }

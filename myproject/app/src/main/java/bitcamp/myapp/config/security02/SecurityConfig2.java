@@ -7,14 +7,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
+//@Configuration
 public class SecurityConfig2 {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    System.out.println("SecurityFilterChain 준비!");
     return http
             // 1) 요청 URL의 접근권한 설정
             .authorizeHttpRequests()
@@ -27,16 +29,23 @@ public class SecurityConfig2 {
             .build();
   }
 
+  // 사용자 인증을 수행할 객체를 준비
   @Bean
   public UserDetailsService userDetailsService() {
     System.out.println("UserDetailsService 준비!");
 
+    // 임시 사용자 정보 생성
+    // 사용자가 입력한 암호를 저장할 때 날 것 그대로 저장하는 것이 아니라,
+    // 특별한 알고리즘으로 가공하여 저장한다.
+    // 로그인을 처리할 때도 사용자가 입력한 암호를 비교할 때,
+    // 내부에서 지정된 알고리즘으로 가공한 후에 저장된 값과 비교한다.
     UserDetails[] userDetails = {
             User.withDefaultPasswordEncoder().username("user1@test.com").password("1111").roles("USER").build(),
             User.withDefaultPasswordEncoder().username("user2@test.com").password("1111").roles("USER").build(),
-            User.withDefaultPasswordEncoder().username("user3@test.com").password("1111").roles("USER").build()
+            User.withDefaultPasswordEncoder().username("user3@test.com").password("1111").roles("USER").build(),
     };
 
+    // 메모리에 사용자 목록을 두고 검사를 수행하는 객체 리턴
     return new InMemoryUserDetailsManager(userDetails);
   }
 }

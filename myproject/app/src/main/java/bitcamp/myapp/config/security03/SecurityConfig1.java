@@ -1,4 +1,4 @@
-package bitcamp.myapp.config.security02;
+package bitcamp.myapp.config.security03;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,10 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-//@Configuration
-public class SecurityConfig4 {
+@Configuration
+public class SecurityConfig1 {
 
-  private static final Log log = LogFactory.getLog(SecurityConfig4.class);
+  private static final Log log = LogFactory.getLog(SecurityConfig1.class);
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

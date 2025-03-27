@@ -9,14 +9,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-//@Configuration
-public class SecurityConfig3 {
+@Configuration
+public class SecurityConfig4 {
 
-  private static final Log log = LogFactory.getLog(SecurityConfig3.class);
+  private static final Log log = LogFactory.getLog(SecurityConfig4.class);
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -76,24 +77,7 @@ public class SecurityConfig3 {
     log.debug("PasswordEncoder 준비!");
     // 사용자가 입력한 암호를 그대로 보지 못하도록 가공하는 클래스 정의
     // => 일단 테스트를 위해 암호를 가공하지 않고 그대로 리턴하게 한다.
-    return new PasswordEncoder() {
-      @Override
-      public String encode(CharSequence rawPassword) {
-        return rawPassword.toString(); // 가공하지 않는다. 원래 암호 그대로 리턴.
-      }
-      @Override
-      public boolean matches(
-              CharSequence rawPassword, // 로그인 폼에 입력한 암호
-              String encodedPassword // UserDetailsService 에 저장된 암호
-      ) {
-        log.debug("암호 비교:");
-        log.debug("로그인 폼에 입력한 암호: " + rawPassword);
-        log.debug("저장되어 있는 사용자 암호: " + encodedPassword);
-        // 저장된 암호와 비교하기 전에 사용자 입력한 암호를 먼저 가공한다.
-        String 가공된암호 = this.encode(rawPassword);
-        return encodedPassword.equals(가공된암호);
-      }
-    };
+    return new BCryptPasswordEncoder();
   }
 
 

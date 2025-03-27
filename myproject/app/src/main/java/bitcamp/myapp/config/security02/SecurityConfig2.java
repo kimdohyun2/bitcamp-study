@@ -4,10 +4,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-//@EnableWebSecurity // Spring Boot에서 자동으로 활성화시킨다.
 public class SecurityConfig2 {
 
   @Bean
@@ -22,5 +25,18 @@ public class SecurityConfig2 {
             .formLogin(Customizer.withDefaults())
             // SecurityFilterChain 준비
             .build();
+  }
+
+  @Bean
+  public UserDetailsService userDetailsService() {
+    System.out.println("UserDetailsService 준비!");
+
+    UserDetails[] userDetails = {
+            User.withDefaultPasswordEncoder().username("user1@test.com").password("1111").roles("USER").build(),
+            User.withDefaultPasswordEncoder().username("user2@test.com").password("1111").roles("USER").build(),
+            User.withDefaultPasswordEncoder().username("user3@test.com").password("1111").roles("USER").build()
+    };
+
+    return new InMemoryUserDetailsManager(userDetails);
   }
 }

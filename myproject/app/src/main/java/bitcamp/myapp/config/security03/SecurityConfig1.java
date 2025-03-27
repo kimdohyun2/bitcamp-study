@@ -1,5 +1,9 @@
 package bitcamp.myapp.config.security03;
 
+import bitcamp.myapp.member.Member;
+import bitcamp.myapp.member.MemberDao;
+import bitcamp.myapp.member.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -36,35 +41,27 @@ public class SecurityConfig1 {
 
   // 사용자 인증을 수행할 객체를 준비
   @Bean
-  public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+  public UserDetailsService userDetailsService(MemberService memberService, PasswordEncoder passwordEncoder, MemberDao memberDao) {
     log.debug("UserDetailsService 준비!");
 
-    UserDetails[] userDetails = {
-            User.builder()
-                    .username("user1@test.com")
-                    .password(passwordEncoder.encode("1111"))
-                    .roles("USER")
-                    .build(),
-            User.builder()
-                    .username("user2@test.com")
-                    .password(passwordEncoder.encode("1111"))
-                    .roles("USER")
-                    .build(),
-            User.builder()
-                    .username("user3@test.com")
-                    .password(passwordEncoder.encode("1111"))
-                    .roles("USER")
-                    .build(),
+    //memberService.changeAllPassword(passwordEncoder.encode("1111"));
 
+    return new UserDetailsService() {
+      @Override
+      public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Member member = memberService.get(email);
+        return User.builder()
+                .username(member.getEmail())
+                .password(member.getPassword())
+                .roles("USER")
+                .build();
+      }
     };
-
-    return new InMemoryUserDetailsManager(userDetails);
   }
 
   @Bean
   public PasswordEncoder passwordEncoder() {
     log.debug("PasswordEncoder 준비!");
-
     // Spring에서 제공하는 PasswordEncoder 사용하기
     return new BCryptPasswordEncoder() {
       @Override
@@ -76,7 +73,5 @@ public class SecurityConfig1 {
       }
     };
   }
-
-
 }
 

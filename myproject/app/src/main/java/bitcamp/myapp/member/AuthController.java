@@ -34,8 +34,8 @@ public class AuthController {
     model.addAttribute("email", email);
   }
 
-  @PostMapping("login")
-  public String login(
+  @PostMapping("success")
+  public String success(
           @AuthenticationPrincipal CustomUserDetails principal,
           HttpSession session) throws Exception {
 

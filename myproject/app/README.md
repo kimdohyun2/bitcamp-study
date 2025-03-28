@@ -12,4 +12,12 @@
 
 ### 2. 설정 Java Config 준비
 
-- 
+- bitcamp.myapp.config.securityxx 패키지
+  - SpringSecurityX 클래스 추가
+  - CustomUserDetails 클래스 추가
+- AuthController 클래스 변경
+- MemberDao.xml 변경
+- MemberDao 변경
+- MemberService, DefaultMemberService 변경
+- login-form.html 변경
+- common.css 변경

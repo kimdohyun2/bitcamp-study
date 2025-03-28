@@ -26,7 +26,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 //   - loadUserByUsername() 변경
 //     - member 객체가 null 경우, 임의의 데이터를 넣은 객체 생성
 
-@Configuration
+//@Configuration
 public class SecurityConfig3 {
 
   private static final Log log = LogFactory.getLog(SecurityConfig3.class);
@@ -43,7 +43,7 @@ public class SecurityConfig3 {
 
             // 2) 인가되지 않은 요청인 경우 Spring Security 기본 로그인 화면으로 보내기
             .formLogin()
-              .successForwardUrl("/auth/login") // 로그인 성공 후 페이지 컨트롤러로 포워딩
+              .successForwardUrl("/auth/success") // 로그인 성공 후 페이지 컨트롤러로 포워딩
               .permitAll()
               .and()
 

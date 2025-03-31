@@ -2,11 +2,10 @@ package bitcamp.myapp.member;
 
 import bitcamp.myapp.common.JsonResult;
 import bitcamp.myapp.config.CustomUserDetails;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,17 +13,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @RequestMapping("/auth")
 public class AuthController {
 
   private static final Log log = LogFactory.getLog(AuthController.class);
-
-  private MemberService memberService;
-
-  public AuthController(MemberService memberService) {
-    this.memberService = memberService;
-  }
 
   @GetMapping("login-form")
   public void form(
@@ -34,7 +27,6 @@ public class AuthController {
   }
 
   @PostMapping("success")
-  @ResponseBody
   public JsonResult success(
           String saveEmail,
           @AuthenticationPrincipal CustomUserDetails principal,
@@ -60,13 +52,11 @@ public class AuthController {
   }
 
   @PostMapping("failure")
-  @ResponseBody
   public JsonResult failure() {
     return JsonResult.builder().status(JsonResult.FAILURE).build();
   }
 
   @GetMapping("user-info")
-  @ResponseBody
   public JsonResult userInfo(HttpSession session) {
     Member member = (Member) session.getAttribute("loginUser");
     if (member == null) {
@@ -80,5 +70,4 @@ public class AuthController {
             .data(member)
             .build();
   }
-
 }

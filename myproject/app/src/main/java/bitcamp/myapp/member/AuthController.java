@@ -2,10 +2,11 @@ package bitcamp.myapp.member;
 
 import bitcamp.myapp.common.JsonResult;
 import bitcamp.myapp.config.CustomUserDetails;
-import lombok.extern.slf4j.Slf4j;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +19,6 @@ import javax.servlet.http.HttpSession;
 public class AuthController {
 
   private static final Log log = LogFactory.getLog(AuthController.class);
-
-  @GetMapping("login-form")
-  public void form(
-          @CookieValue(value="email", required=false) String email,
-          Model model) {
-    model.addAttribute("email", email);
-  }
 
   @PostMapping("success")
   public JsonResult success(
@@ -70,4 +64,5 @@ public class AuthController {
             .data(member)
             .build();
   }
+
 }

@@ -29,23 +29,6 @@ public class BoardController {
     this.boardService = boardService;
     this.storageService = storageService;
   }
-  /*
-  @GetMapping("list")
-  public String list(Map map) throws Exception {
-    List<Board> list = boardService.list();
-    map.put("list", list);
-    return "/board/list";
-  }
-  */
-
-  /*
-  @GetMapping("list")
-  public String list(Model model) throws Exception {
-    List<Board> list = boardService.list();
-    model.addAttribute("list", list);
-    return "/board/list";
-  }
-  */
 
   @GetMapping("list")
   public JsonResult list() throws Exception {
@@ -58,8 +41,12 @@ public class BoardController {
 
   @GetMapping("detail")
   public JsonResult detail(int no) throws Exception {
-    boardService.increaseViewCount(no);
     Board board = boardService.get(no);
+    if (board == null) {
+      return JsonResult.builder().status(JsonResult.FAILURE).build();
+    }
+
+    boardService.increaseViewCount(no);
 
     return JsonResult.builder()
             .status(JsonResult.SUCCESS)

@@ -1,4 +1,4 @@
-(function() { // 페이지 헤더 로딩
+function loadHeader() { // 페이지 헤더 로딩
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/header.html", false);
   xhr.send();
@@ -8,9 +8,9 @@
 
   document.body.insertBefore(doc.querySelector("#page-header"), document.body.firstChild);
 
-})();
+}
 
-(function() { // 페이지 푸터 로딩
+function loadFooter() { // 페이지 푸터 로딩
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/footer.html", false);
   xhr.send();
@@ -19,4 +19,4 @@
   let doc = parser.parseFromString(xhr.responseText, "text/html");
 
   document.body.appendChild(doc.querySelector("#page-footer"));
-})();
+}

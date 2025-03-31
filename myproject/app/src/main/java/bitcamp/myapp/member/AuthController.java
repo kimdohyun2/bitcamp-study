@@ -65,7 +65,6 @@ public class AuthController {
     return JsonResult.builder().status(JsonResult.FAILURE).build();
   }
 
-
   @GetMapping("user-info")
   @ResponseBody
   public JsonResult userInfo(HttpSession session) {

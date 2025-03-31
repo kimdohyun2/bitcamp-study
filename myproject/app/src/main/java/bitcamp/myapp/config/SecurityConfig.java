@@ -7,14 +7,22 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 // 학습 목표:
 // - 로그인 페이지 커스터마이징
@@ -46,18 +54,21 @@ public class SecurityConfig {
               .loginPage("/error") // Spring Security에서 로그인 폼을 제공하지 않는다.
               .loginProcessingUrl("/auth/login") // 로그인 폼의 action 값 설정. 이 요청은 Spring Security에서 처리한다.
               .successForwardUrl("/auth/success") // 로그인 성공 후 페이지 컨트롤러로 포워딩
+              .failureForwardUrl("/auth/failure") // 로그인 실패 후 페이지 컨트롤러로 포워딩
               .usernameParameter("email") // 클라이언트가 보내는 이메일의 파라미터 명을 "username"에서 "email"로 바꾼다.
               .passwordParameter("password") // 암호를 보내는 파라미터 이름을 설정한다.
               .permitAll()
               .and()
 
             // 3) 로그아웃 설정
-            // - formLogin()을 커스터마이징한다면, /logout 경로가 비활성화된다.
-            // - 따라서 다음과 같이 명시적으로 설정해야 한다.
             .logout()
-              //.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // GET 요청 허용
               .logoutUrl("/logout") // 로그아웃 URL 설정. 기본은 POST 요청에만 동작한다.
-              //.logoutSuccessUrl("/home") // 로그아웃 성공 후 이동 페이지
+              // 로그아웃 결과를 직접 출력한다.
+              .logoutSuccessHandler((request, response, authentication) -> {
+                  response.setStatus(HttpServletResponse.SC_OK);
+                  response.setContentType("application/json");
+                  response.getWriter().println("{\"status\":\"success\"}");
+                })
               .invalidateHttpSession(true) // 세션 무효화 설정
               .deleteCookies("JSESSIONID") // 톰캣 서버에서 세션 ID를 전달할 때 사용하는 쿠키
               .permitAll()

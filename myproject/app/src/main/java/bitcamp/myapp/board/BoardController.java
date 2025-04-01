@@ -54,12 +54,8 @@ public class BoardController {
             .build();
   }
 
-  @GetMapping("form")
-  public void form() {
-  }
-
   @PostMapping("add")
-  public String add(
+  public JsonResult add(
           Board board,
           Part[] files,
           HttpSession session) throws Exception {
@@ -92,9 +88,9 @@ public class BoardController {
       for (AttachedFile file : board.getAttachedFiles()) {
         storageService.delete("board/" + file.getFilename());
       }
-      throw e;
+      return JsonResult.builder().status(JsonResult.FAILURE).build();
     }
-    return "redirect:list";
+    return JsonResult.builder().status(JsonResult.SUCCESS).build();
   }
 
   @PostMapping("update")

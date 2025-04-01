@@ -115,6 +115,7 @@
     <a href="list.html">목록</a>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 <script>
 const no = parseInt(new URLSearchParams(window.location.search).get("no"));
 if (isNaN(no)) {
@@ -141,6 +142,7 @@ document.querySelector("#writer").value = data.writer.name;
 document.querySelector("#createDate").value = data.createDate;
 document.querySelector("#viewCount").value = data.viewCount;
 
+const template = Handlerbars.comfile(document.querySelector("#li-template").innerHTML);
 
 
 function deleteBoard(no) {
@@ -153,4 +155,6 @@ function deleteFile(no) {
 }
 </script>
 </body>
+
+
 </html>

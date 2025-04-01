@@ -4,8 +4,10 @@ import bitcamp.myapp.member.Member;
 import bitcamp.myapp.member.MemberService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,12 +19,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 // 학습 목표:
 // - 로그인 페이지 커스터마이징
@@ -37,6 +42,9 @@ import java.io.PrintWriter;
 public class SecurityConfig {
 
   private static final Log log = LogFactory.getLog(SecurityConfig.class);
+
+  private final CorsConfigurationSource corsConfigurationSource;
+
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -88,7 +96,7 @@ public class SecurityConfig {
             .csrf()
               .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
               .and()
-
+            .cors(CorsConfigurationSource)
             // SecurityFilterChain 준비
             .build();
   }

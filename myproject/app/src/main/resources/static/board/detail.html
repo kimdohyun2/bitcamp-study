@@ -147,17 +147,44 @@ document.querySelector("#viewCount").value = data.viewCount;
 const template = Handlebars.compile(document.querySelector("#li-template").innerHTML);
 document.querySelector("#attached-files").innerHTML = template(data);
 
-function deleteBoard(no) {
-    document.getElementById("delete-form").submit();
+document.querySelector("#board-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("PATCH", `/board/update`, false);
+    xhr.setRequestHeader("X-XSRF-TOKEN", __csrfToken);
+    xhr.send(new FormData(document.querySelector("#board-form")));
+
+    const response = JSON.parse(xhr.responseText);
+    if (response.status == "failure") {
+        alert("게시글 변경 실패!");
+        return;
+    }
+
+    location.reload();
+})
+
+function deleteBoard() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("DELETE", `/board/delete?No=${no}`, false);
+    xhr.setRequestHeader("X-XSRF-TOKEN", __csrfToken);
+    xhr.send();
+
+    const response = JSON.parse(xhr.responseText);
+    if (response.status == "failure") {
+        alert("게시글 삭제 실패!");
+        return;
+    }
+    location.href = "list.html";
 }
 
 function deleteFile(no) {
     const xhr = new XMLHttpRequest();
-    xhr.open("DELETE", `/board/file/delete?fileNo=${no}`, false);
+    xhr.open("DELETE", `/board/file/delete`, false);
     xhr.setRequestHeader("X-XSRF-TOKEN", __csrfToken);
 
     const formData = new FormData();
-    formData.append("no", no);
+    formData.append("fileNo", no);
 
     xhr.send(formData);
 
@@ -168,8 +195,6 @@ function deleteFile(no) {
     }
     
     document.querySelector("#attached-files").removeChild(document.querySelector("#file-" + no));
-    //location.reload();
-
 }
 </script>
 </body>

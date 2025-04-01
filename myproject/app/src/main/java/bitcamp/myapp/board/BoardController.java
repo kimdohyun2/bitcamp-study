@@ -136,17 +136,14 @@ public class BoardController {
     return "redirect:list";
   }
 
-  @PostMapping("delete")
-  public String delete(int no, HttpSession session) throws Exception {
+  @DeleteMapping("delete")
+  public JsonResult delete(int no, HttpSession session) throws Exception {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
-    if (loginUser == null) {
-      throw new Exception("로그인이 필요합니다.");
-    }
-
     Board board = boardService.get(no);
     if (board.getWriter().getNo() != loginUser.getNo()) {
-      throw new Exception("삭제 권한이 없습니다.");
+
+      return JsonResult.builder().status(JsonResult.FAILURE).data("삭제 권한이 없습니다").build();
     }
 
     for (AttachedFile attachedFile : board.getAttachedFiles()) {
@@ -154,7 +151,7 @@ public class BoardController {
     }
 
     boardService.delete(no);
-    return "redirect:list";
+    return JsonResult.builder().status(JsonResult.SUCCESS).build();
   }
 
   @GetMapping("file/download")

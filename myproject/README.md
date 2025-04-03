@@ -17,3 +17,6 @@
 ## 15. Spring Security 적용하기
 ## 16. CSRF 공격 방어하기
 ## 17. CSR 방식으로 전환하기
+## 18. Backend와 Frontend를 분리하기
+## 19. JWT 인증 적용하기
+## 20. 마이크로서비스 도입하기
